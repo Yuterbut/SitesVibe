@@ -1,0 +1,990 @@
+<title>Дискавери автомастерской</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<style>
+:root {
+  --ground:      #F4F6F2;
+  --surface:     #FFFFFF;
+  --surface-2:   #EDF0EB;
+  --ink:         #151A19;
+  --ink-soft:    #3D4744;
+  --muted:       #6E7873;
+  --line:        #DBE0D8;
+  --line-strong: #C2C9BE;
+  --petrol:      #12403C;
+  --petrol-soft: #2C625C;
+  --accent:      #B84A18;
+  --accent-soft: #F0E2D8;
+  --ok:          #2F6B4F;
+  --ok-bg:       #E2EFE7;
+  --part:        #8A6416;
+  --part-bg:     #F3EBD6;
+  --off:         #6B736E;
+  --off-bg:      #E7EAE5;
+  --shadow:      0 1px 2px rgba(21,26,25,.05), 0 8px 24px -12px rgba(21,26,25,.14);
+
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body:    "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:      #101413;
+    --surface:     #171D1B;
+    --surface-2:   #1E2523;
+    --ink:         #E7EBE7;
+    --ink-soft:    #BFC7C2;
+    --muted:       #8E9994;
+    --line:        #262E2B;
+    --line-strong: #37413D;
+    --petrol:      #7BC4B4;
+    --petrol-soft: #5FA697;
+    --accent:      #E8813F;
+    --accent-soft: #33241A;
+    --ok:          #74C79B;
+    --ok-bg:       #1B2C23;
+    --part:        #D6AC5A;
+    --part-bg:     #2E2718;
+    --off:         #8E9994;
+    --off-bg:      #212724;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:      #101413;
+  --surface:     #171D1B;
+  --surface-2:   #1E2523;
+  --ink:         #E7EBE7;
+  --ink-soft:    #BFC7C2;
+  --muted:       #8E9994;
+  --line:        #262E2B;
+  --line-strong: #37413D;
+  --petrol:      #7BC4B4;
+  --petrol-soft: #5FA697;
+  --accent:      #E8813F;
+  --accent-soft: #33241A;
+  --ok:          #74C79B;
+  --ok-bg:       #1B2C23;
+  --part:        #D6AC5A;
+  --part-bg:     #2E2718;
+  --off:         #8E9994;
+  --off-bg:      #212724;
+  --shadow:      0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px 96px;
+}
+
+.measure { max-width: 68ch; }
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  padding: 56px 0 30px;
+  border-bottom: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+h1 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(2.3rem, 5.5vw, 3.5rem);
+  line-height: 1.02;
+  letter-spacing: -.028em;
+  margin: 0;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.standfirst {
+  font-size: 1.16rem;
+  color: var(--ink-soft);
+  max-width: 62ch;
+  margin: 0;
+}
+
+.metastrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  letter-spacing: .05em;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding-top: 4px;
+}
+.metastrip b { color: var(--ink-soft); font-weight: 500; }
+
+/* ---------- sections ---------- */
+
+section { padding-top: 60px; }
+
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 10px;
+  margin-bottom: 26px;
+}
+
+.sec-tag {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  color: var(--muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+h2 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(1.45rem, 2.6vw, 1.85rem);
+  letter-spacing: -.018em;
+  margin: 0;
+  line-height: 1.15;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h3 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 1.12rem;
+  letter-spacing: -.008em;
+  margin: 0 0 8px;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:focus-visible, .q:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+strong { font-weight: 600; color: var(--ink); }
+
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: .88em;
+}
+code {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--ink-soft);
+}
+
+/* ---------- the fork callout ---------- */
+
+.fork {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  padding: 28px 30px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.fork p { max-width: 68ch; }
+
+/* ---------- decisions ---------- */
+
+.decisions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--petrol);
+}
+.decision {
+  background: var(--surface);
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.decision .dq {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.decision .da {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.25;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+.decision .dn {
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---------- tiers ---------- */
+
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 18px;
+}
+
+.tier {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tier-label {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--petrol);
+  font-weight: 500;
+}
+
+.tier ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.tier li { font-size: .95rem; color: var(--ink-soft); }
+
+.tier .takeaway {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-family: var(--f-display);
+  font-size: .92rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+/* ---------- findings ---------- */
+
+.findings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.finding {
+  background: var(--surface);
+  padding: 20px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.finding .num {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.95rem;
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--petrol);
+  font-variant-numeric: tabular-nums;
+}
+.finding .lede {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: .93rem;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.finding .note {
+  font-size: .89rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---------- block sequence (7 blocks) ---------- */
+
+.seq { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); background: var(--surface); }
+.seq-row {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 16px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.seq-row:last-child { border-bottom: 0; }
+.seq-n {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+}
+.seq-t { font-size: .97rem; color: var(--ink-soft); }
+.seq-t b { font-family: var(--f-display); font-weight: 600; color: var(--ink); }
+
+/* ---------- tables ---------- */
+
+.scroller { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+
+table { border-collapse: collapse; width: 100%; min-width: 620px; }
+
+th {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface-2);
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-size: .94rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+tr:last-child td { border-bottom: 0; }
+
+td.skill {
+  font-family: var(--f-mono);
+  font-size: .84rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-block;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.chip.ok   { background: var(--ok-bg);   color: var(--ok); }
+.chip.part { background: var(--part-bg); color: var(--part); }
+.chip.off  { background: var(--off-bg);  color: var(--off); }
+
+td.qnum {
+  font-family: var(--f-mono);
+  font-size: .82rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+td.unans { color: var(--muted); }
+
+td.numcell {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--ink);
+}
+td.numcell b { color: var(--petrol); font-weight: 500; }
+
+/* ---------- questionnaire ---------- */
+
+.qblock { margin-bottom: 30px; }
+
+.qblock-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.qblock-n {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: .08em;
+}
+
+.qlist { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+
+.q {
+  background: var(--surface);
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 14px;
+  padding: 13px 18px;
+  align-items: baseline;
+}
+.q-n {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.q-t { font-size: .97rem; color: var(--ink); }
+.q-t .hint { display: block; color: var(--muted); font-size: .88rem; margin-top: 3px; }
+.q-t .hint b { color: var(--petrol); font-weight: 400; font-family: var(--f-mono); font-size: .92em; }
+
+/* ---------- default recommendation ---------- */
+
+.rec {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--petrol);
+  padding: 24px 26px;
+}
+.rec ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 9px; }
+.rec li { font-size: .97rem; color: var(--ink-soft); }
+.rec li b { font-family: var(--f-display); color: var(--ink); }
+
+/* ---------- sources ---------- */
+
+.sources { font-size: .88rem; color: var(--muted); }
+.sources ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+
+.caveat {
+  font-size: .9rem;
+  color: var(--muted);
+  border-left: 2px solid var(--line-strong);
+  padding-left: 14px;
+  margin-top: 20px;
+  max-width: 68ch;
+}
+
+@media (max-width: 640px) {
+  body { font-size: 16.5px; }
+  .page { padding: 0 18px 72px; }
+  .masthead { padding-top: 40px; }
+  .q, .seq-row { grid-template-columns: 38px 1fr; gap: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">Дискавери · сайт с онлайн-записью</div>
+    <h1>Автомастерская: что строим</h1>
+    <p class="standfirst">Разбор рынка, карта применимости установленных дизайн-скилов и опрос по требованиям — до того, как написана первая строчка вёрстки.</p>
+    <div class="metastrip">
+      <span><b>Проект</b> SitesVibe</span>
+      <span><b>Дата</b> 23.08.2026</span>
+      <span><b>Скилов установлено</b> 20</span>
+      <span><b>Опрос</b> 30 из 32 закрыто</span>
+    </div>
+  </header>
+
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Решено</span>
+      <h2>Четыре ответа, которые задали проект</h2>
+    </div>
+    <div class="decisions">
+      <div class="decision">
+        <div class="dq">4.1 · Учётная система</div>
+        <div class="da">Ничего или Excel</div>
+        <div class="dn">Чужого виджета нет. Запись пишем сами — значит, нужен бэкенд, а не только вёрстка.</div>
+      </div>
+      <div class="decision">
+        <div class="dq">2.2 · Механика записи</div>
+        <div class="da">Реальные слоты в расписании</div>
+        <div class="dn">Клиент занимает конкретное время на конкретном посту. Это продукт с базой, а не форма обратной связи.</div>
+      </div>
+      <div class="decision">
+        <div class="dq">7.2 · Объём</div>
+        <div class="da">Лендинг плюс каталог услуг</div>
+        <div class="dn">Убеждающая главная и раздел услуг с ценами. SEO-страницы под каждый запрос — возможное расширение позже.</div>
+      </div>
+      <div class="decision">
+        <div class="dq">7.1 · Визуал</div>
+        <div class="da">Дорогой премиум</div>
+        <div class="dn">Ведёт high-end-visual-design. Минимализм и индустриальное направление выбывают.</div>
+      </div>
+      <div class="decision">
+        <div class="dq">1.2 · Мощность</div>
+        <div class="da">2 поста, 2 мастера</div>
+        <div class="dn">Ровно два параллельных места. Дневная ёмкость — около 20 постов-часов, и это очень мало: одна ошибка в расписании видна сразу.</div>
+      </div>
+      <div class="decision">
+        <div class="dq">2.3 · Выбор мастера</div>
+        <div class="da">Клиент не выбирает</div>
+        <div class="dn">Сильное упрощение. Мастер не сущность в записи — слот привязан к посту, а кто именно работает, решает мастерская.</div>
+      </div>
+      <div class="decision">
+        <div class="dq">2.4 · Длительности</div>
+        <div class="da">Своих нормативов нет</div>
+        <div class="dn">Собрал стартовую таблицу на 29 работ — ниже. До запуска её нужно выверить под реальный цех.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Сверка</span>
+      <h2>Расхождения сняты</h2>
+    </div>
+
+    <div class="fork">
+      <h3>Оба вопроса оказались недоразумением, а не сменой курса</h3>
+      <p><strong>Механика записи.</strong> «Уведомление в Telegram» в <span class="mono">2.2</span> — это не замена расписанию, а то, что происходит после брони: мастеру падает сообщение о том, что кто-то записался. Расписание со слотами остаётся. Telegram — канал уведомления, и он же ответ на <span class="mono">4.2</span>.</p>
+      <p><strong>Мощность.</strong> Напарник есть, два поста и два мастера подтверждены. Ответ <span class="mono">4.4</span> был про то, кто разбирает заявки, а не про то, кто крутит гайки.</p>
+      <p><strong>Состав уведомления задан прямо в ответе</strong> и становится спецификацией: время, марка, вид работ. К этому добавляем телефон клиента и VIN — без них по заявке не перезвонить и не подготовиться.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Ответы</span>
+      <h2>Что известно о проекте</h2>
+    </div>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>№</th><th>Вопрос</th><th>Ответ</th></tr></thead>
+        <tbody>
+          <tr><td class="qnum">1.1</td><td>Название</td><td class="">NiKillya</td></tr>
+          <tr><td class="qnum">1.2</td><td>Мощность</td><td class="">2 поста, 2 мастера</td></tr>
+          <tr><td class="qnum">1.3</td><td>Специализация</td><td class="">Легковые, любые марки</td></tr>
+          <tr><td class="qnum">1.4</td><td>Текущий сайт</td><td class="">Нет</td></tr>
+          <tr><td class="qnum">1.5</td><td>Фирстиль и фото</td><td class="">Нет ничего</td></tr>
+          <tr><td class="qnum">2.1</td><td>Клиент</td><td class="">Частные лица</td></tr>
+          <tr><td class="qnum">2.2</td><td>После кнопки</td><td class="">Уведомление в Telegram @TuTutudo</td></tr>
+          <tr><td class="qnum">2.3</td><td>Выбор мастера</td><td class="">Клиент не выбирает</td></tr>
+          <tr><td class="qnum">2.4</td><td>Длительности</td><td class="">Своих нет, взяты стартовые</td></tr>
+          <tr><td class="qnum">2.5</td><td>Предоплата</td><td class="">Не нужна</td></tr>
+          <tr><td class="qnum">2.6</td><td>Отмена и перенос</td><td class="">Только звонком</td></tr>
+          <tr><td class="qnum">3.1</td><td>Прайс</td><td class="">На бумаге, точных цен пока нет</td></tr>
+          <tr><td class="qnum">3.2</td><td>Цены на сайте</td><td class="">Показывать «от»</td></tr>
+          <tr><td class="qnum">3.3</td><td>Калькулятор или квиз</td><td class="">Да</td></tr>
+          <tr><td class="qnum">3.4</td><td>Подбор авто</td><td class="">Поле VIN без авторасшифровки</td></tr>
+          <tr><td class="qnum">4.1</td><td>Учётная система</td><td class="">Ничего</td></tr>
+          <tr><td class="qnum">4.2</td><td>Куда падает заявка</td><td class="">Пока Telegram</td></tr>
+          <tr><td class="qnum">4.3</td><td>SMS и напоминания</td><td class="">Да, но позже</td></tr>
+          <tr><td class="qnum">4.4</td><td>Кто обрабатывает</td><td class="">Владелец, он же мастер, в свободное время</td></tr>
+          <tr><td class="qnum">4.5</td><td>Статус ремонта</td><td class="">Да, нужен</td></tr>
+          <tr><td class="qnum">5.1</td><td>Стек</td><td class="">На моё усмотрение</td></tr>
+          <tr><td class="qnum">5.2</td><td>Хостинг</td><td class="">Пока локально</td></tr>
+          <tr><td class="qnum">5.3</td><td>Домен</td><td class="">Не куплен</td></tr>
+          <tr><td class="qnum">5.4</td><td>Аналитика</td><td class="">Только начинает</td></tr>
+          <tr><td class="qnum">5.5</td><td>Админка</td><td class="">Не нужна, правки через меня</td></tr>
+          <tr><td class="qnum">6.1</td><td>Форма деятельности</td><td class="">Ни ИП, ни самозанятый — чинит знакомым</td></tr>
+          <tr><td class="qnum">6.2</td><td>Политика ПДн</td><td class="">Нет</td></tr>
+          <tr><td class="qnum">6.3</td><td>Уведомление в РКН</td><td class="">Нет</td></tr>
+          <tr><td class="qnum">7.1</td><td>Визуал</td><td class="">Дорогой премиум</td></tr>
+          <tr><td class="qnum">7.2</td><td>Объём</td><td class="">Лендинг плюс каталог услуг</td></tr>
+          <tr><td class="qnum">7.3</td><td>Одна точка или сеть</td><td class="unans">—</td></tr>
+          <tr><td class="qnum">7.4</td><td>Срок и бюджет</td><td class="unans">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caveat">Два вопроса блока 7 остались без ответа — одна точка или сеть и срок с бюджетом. На архитектуру они не влияют, но на объём работ влияют напрямую.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Что это значит</span>
+      <h2>Мы выбрали дорогую половину развилки</h2>
+    </div>
+    <div class="fork">
+      <h3>Сайт принимает заявки или ведёт расписание?</h3>
+      <p>Это не деталь — это два разных проекта. <strong>Заявка</strong> — форма отправляет лид в Telegram и на почту, администратор перезванивает и сам ставит машину в план. Фронтенд, никакой базы, запуск за дни.</p>
+      <p><strong>Расписание</strong> — клиент видит реальные свободные слоты и занимает пост на конкретное время. Это уже продукт: база данных, модель постов и мастеров, длительность работ, блокировка двойной записи, отмена и перенос, напоминания, админка. Другой бюджет, другие сроки.</p>
+      <p>Третий путь — <strong>чужой виджет</strong> из готовой CRM — отпал: учётной системы нет, брать нечего.</p>
+      <p>Выбрано расписание. Это превращает задачу из «сайт за неделю» в разработку продукта — но физика цеха оказалась простой, и это сильно помогает. Два поста, два мастера, мастер не выбирается: значит, в модели нет ни сущности «мастер», ни выбора исполнителя. Остаётся ровно два параллельных места и длительность работы. Проще расписание уже не бывает.</p>
+    </div>
+  </section>
+
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Длительности</span>
+      <h2>29 работ: нормо-час и занятость поста</h2>
+    </div>
+
+    <p class="measure">Первое, что нужно развести, иначе расписание развалится: <strong>нормо-час — это не длительность слота</strong>. Нормо-час — оплачиваемое время работы мастера. Слот — время, на которое пост занят целиком: машину надо принять, загнать, поднять, а после работы оформить и выдать. Слот всегда длиннее, и планировщик обязан считать именно по нему.</p>
+
+    <div class="findings" style="margin:24px 0 28px">
+      <div class="finding">
+        <div class="num">20 ч</div>
+        <div class="lede">Дневная ёмкость мастерской</div>
+        <div class="note">Два поста по десять часов. Всё, что мы ставим в расписание, делится на эти двадцать постов-часов.</div>
+      </div>
+      <div class="finding">
+        <div class="num">6 ч</div>
+        <div class="lede">Замена сцепления</div>
+        <div class="note">Больше половины дня одного из двух постов. Такие работы нельзя предлагать обычным слотом — только режим «машина остаётся».</div>
+      </div>
+      <div class="finding">
+        <div class="num">30 мин</div>
+        <div class="lede">Шаг сетки записи</div>
+        <div class="note">Все слоты округлены до получаса. Более мелкий шаг на двух постах даёт ложную точность и неудобный выбор.</div>
+      </div>
+    </div>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>Работа</th><th>Нормо-час</th><th>Слот</th><th>Категория</th><th>Режим</th><th>Число</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Замена аккумулятора</td><td class="numcell">0,3</td><td class="numcell"><b>0,5</b></td><td>Экспресс</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена воздушного фильтра</td><td class="numcell">0,2</td><td class="numcell"><b>0,5</b></td><td>Экспресс</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена салонного фильтра</td><td class="numcell">0,3</td><td class="numcell"><b>0,5</b></td><td>Экспресс</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена щёток стеклоочистителя</td><td class="numcell">0,1</td><td class="numcell"><b>0,5</b></td><td>Экспресс</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Диагностика подвески на подъёмнике</td><td class="numcell">0,5</td><td class="numcell"><b>1</b></td><td>Ходовая</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена антифриза</td><td class="numcell">0,7</td><td class="numcell"><b>1</b></td><td>ТО</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена масла ДВС с фильтром</td><td class="numcell">0,5</td><td class="numcell"><b>1</b></td><td>Экспресс</td><td>выбор времени</td><td><span class="chip ok">источник</span></td></tr>
+          <tr><td>Замена стоек стабилизатора (пара)</td><td class="numcell">0,7</td><td class="numcell"><b>1</b></td><td>Ходовая</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена тормозной жидкости</td><td class="numcell">0,7</td><td class="numcell"><b>1</b></td><td>Тормоза</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Заправка кондиционера</td><td class="numcell">0,7</td><td class="numcell"><b>1</b></td><td>Климат</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Компьютерная диагностика</td><td class="numcell">0,5</td><td class="numcell"><b>1</b></td><td>Экспресс</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена свечей зажигания</td><td class="numcell">0,8</td><td class="numcell"><b>1,5</b></td><td>ТО</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена тормозных колодок (одна ось)</td><td class="numcell">0,9</td><td class="numcell"><b>1,5</b></td><td>Тормоза</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Развал-схождение</td><td class="numcell">0,7</td><td class="numcell"><b>1,5</b></td><td>Колёса</td><td>выбор времени</td><td><span class="chip ok">источник</span></td></tr>
+          <tr><td>Шиномонтаж комплекта с балансировкой</td><td class="numcell">1</td><td class="numcell"><b>1,5</b></td><td>Колёса</td><td>выбор времени</td><td><span class="chip ok">источник</span></td></tr>
+          <tr><td>Замена амортизаторов задних (пара)</td><td class="numcell">1,5</td><td class="numcell"><b>2</b></td><td>Ходовая</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена термостата</td><td class="numcell">1,5</td><td class="numcell"><b>2</b></td><td>Двигатель</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена тормозных дисков с колодками (одна ось)</td><td class="numcell">1,5</td><td class="numcell"><b>2</b></td><td>Тормоза</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена генератора</td><td class="numcell">2</td><td class="numcell"><b>2,5</b></td><td>Двигатель</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена рычагов подвески (пара)</td><td class="numcell">2</td><td class="numcell"><b>2,5</b></td><td>Ходовая</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена стартера</td><td class="numcell">2</td><td class="numcell"><b>2,5</b></td><td>Двигатель</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена ступичного подшипника (одна сторона)</td><td class="numcell">2</td><td class="numcell"><b>2,5</b></td><td>Ходовая</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Комплексное ТО (масло, фильтры, осмотр)</td><td class="numcell">1,7</td><td class="numcell"><b>2,5</b></td><td>ТО</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена помпы</td><td class="numcell">2,5</td><td class="numcell"><b>3</b></td><td>Двигатель</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена радиатора</td><td class="numcell">2,5</td><td class="numcell"><b>3</b></td><td>Двигатель</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена стоек передних (пара)</td><td class="numcell">2,2</td><td class="numcell"><b>3</b></td><td>Ходовая</td><td>выбор времени</td><td><span class="chip off">оценка</span></td></tr>
+          <tr><td>Замена ремня ГРМ (комплект)</td><td class="numcell">3,5</td><td class="numcell"><b>4</b></td><td>Двигатель</td><td>выбор времени</td><td><span class="chip ok">источник</span></td></tr>
+          <tr><td>Замена ремня ГРМ с помпой</td><td class="numcell">4</td><td class="numcell"><b>5</b></td><td>Двигатель</td><td>машина остаётся</td><td><span class="chip ok">источник</span></td></tr>
+          <tr><td>Замена сцепления</td><td class="numcell">5</td><td class="numcell"><b>6</b></td><td>Трансмиссия</td><td>машина остаётся</td><td><span class="chip off">оценка</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="caveat">Честно про происхождение чисел: пять позиций опираются на найденные источники — замена масла около 30 минут, шиномонтаж комплекта 30–60 минут плюс 15–30 на балансировку, развал-схождение в среднем полчаса, ремень ГРМ около 3 часов вместе с помпой и сальниками. Остальные 24 — типовые оценки по практике независимых сервисов, а не выписка из справочника. Отраслевой норматив существует (РД 03112178-1023-99, сборник норм времени на ТО и ремонт), но точные нормо-часы под конкретную марку живут в платных базах вроде Audatex и ALLDATA и по определению не бывают общими. Выгрузить прайсы конкурентов напрямую не вышло — прокси блокирует загрузку страниц.</p>
+
+    <p class="measure" style="margin-top:18px">Практический вывод: это стартовая точка, чтобы расписание заработало, а не готовый норматив. На двух постах ошибка в полчаса на популярной работе за день превращается в сорванный слот, поэтому до запуска мастерская проходит таблицу и проставляет свои числа. Таблица лежит в репозитории — <code>data/services.csv</code>.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Конкуренты</span>
+      <h2>Три эшелона, и мы конкурируем не со всеми</h2>
+    </div>
+    <div class="tiers">
+
+      <div class="tier">
+        <div class="tier-label">Эшелон 1 · Агрегаторы</div>
+        <ul>
+          <li>Uremont — свыше 15 000 подключённых автосервисов</li>
+          <li>Zoon, Яндекс.Услуги, Авито</li>
+          <li>Клиент оставляет одну заявку, сервисы конкурируют предложениями</li>
+        </ul>
+        <div class="takeaway">По охвату их не обогнать. Они — канал трафика и одновременно соперник за тот же поисковый запрос. Наш сайт должен выигрывать конкретикой и доверием, а не ассортиментом.</div>
+      </div>
+
+      <div class="tier">
+        <div class="tier-label">Эшелон 2 · CRM с виджетом</div>
+        <ul>
+          <li>YCLIENTS, АвтоДилер Онлайн, 1С:Автосервис, Wilgood IS</li>
+          <li>Автозаполнение по VIN или госномеру: марка, модель, год, цвет</li>
+          <li>Интеграции с Метрикой, Google Analytics и Календарём — заявлено 60+ сервисов</li>
+        </ul>
+        <div class="takeaway">Если CRM уже стоит — свою запись писать незачем. Задача сводится к тому, чтобы встроить виджет и не испортить им дизайн и мобильную вёрстку.</div>
+      </div>
+
+      <div class="tier">
+        <div class="tier-label">Эшелон 3 · Сайты сетей</div>
+        <ul>
+          <li>Вилгуд — форма выделена цветом, callback-перехват, оценка стоимости за 5 минут, WhatsApp</li>
+          <li>Белый сервис — калькулятор цен, прозрачный прайс, отчёты по этапам ремонта; сеть в 38 городах</li>
+          <li>FitService — форму найти труднее, шапка перегружена</li>
+        </ul>
+        <div class="takeaway">Вот наш реальный ориентир. Лидеры продают не ремонт, а предсказуемость: цена известна заранее, статус виден, ждать не надо.</div>
+      </div>
+
+    </div>
+
+    <p class="caveat">Прямой аудит сайтов конкурентов провести не удалось — сетевой прокси этой среды блокирует загрузку внешних страниц. Всё выше собрано из опубликованных обзоров и описаний самих сервисов, ссылки в конце. Если нужен разбор вёрстки и форм вживую, это делается локально у тебя.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Что двигает конверсию</span>
+      <h2>Цифры, вокруг которых сходятся отраслевые источники</h2>
+    </div>
+
+    <div class="findings">
+      <div class="finding">
+        <div class="num">&lt;60 сек</div>
+        <div class="lede">Столько должна занимать запись</div>
+        <div class="note">Каждое лишнее поле измеримо снижает конверсию. У сервисов с лучшей записью спрашивают только имя, телефон, почту, автомобиль, что не так и время.</div>
+      </div>
+      <div class="finding">
+        <div class="num">60 сек</div>
+        <div class="lede">Окно на подтверждение</div>
+        <div class="note">Без SMS или письма в первую минуту клиент начинает сомневаться, прошла ли заявка вообще, и звонит или уходит.</div>
+      </div>
+      <div class="finding">
+        <div class="num">−50%</div>
+        <div class="lede">Неявки после напоминания</div>
+        <div class="note">Напоминание за 24 часа сокращает долю неявившихся примерно вдвое. Дешевле любой рекламы.</div>
+      </div>
+      <div class="finding">
+        <div class="num">Mobile</div>
+        <div class="lede">Большинство поисков — с телефона</div>
+        <div class="note">Если виджет неудобен на узком экране, запись теряется там же. Мобильная вёрстка здесь не «адаптив», а основной сценарий.</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:34px">Структура страницы услуги, которая повторяется у лидеров</h3>
+    <p class="measure">Порядок здесь содержательный: каждый блок снимает одно возражение и передаёт клиента следующему. Менять местами их нельзя.</p>
+    <div class="seq">
+      <div class="seq-row"><span class="seq-n">01</span><span class="seq-t"><b>Подходит ли мне</b> — hero отвечает на вопрос «чинят ли здесь мою машину»</span></div>
+      <div class="seq-row"><span class="seq-n">02</span><span class="seq-t"><b>Что входит</b> — обзор услуг с чёткими границами работ</span></div>
+      <div class="seq-row"><span class="seq-n">03</span><span class="seq-t"><b>Ряд доверия</b> — отзывы, гарантия, срок работы, сертификаты</span></div>
+      <div class="seq-row"><span class="seq-n">04</span><span class="seq-t"><b>Как проходит диагностика</b> — пошагово, чтобы снять страх «накрутят»</span></div>
+      <div class="seq-row"><span class="seq-n">05</span><span class="seq-t"><b>Варианты записи</b> — форма, телефон, мессенджер: выбор канала за клиентом</span></div>
+      <div class="seq-row"><span class="seq-n">06</span><span class="seq-t"><b>FAQ снятия рисков</b> — цена, сроки, запчасти, что если найдут ещё поломку</span></div>
+      <div class="seq-row"><span class="seq-n">07</span><span class="seq-t"><b>Финальная CTA-зона</b> — последний заход на запись</span></div>
+    </div>
+
+    <h3 style="margin-top:34px">152-ФЗ — не «потом», а часть формы</h3>
+    <p class="measure">Форма записи собирает персональные данные, поэтому требования закона проектируются вместе с ней, а не прикручиваются к запуску:</p>
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>Требование</th><th>Что это значит в вёрстке</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Чекбокс согласия под каждой формой</td><td>Не отмечен по умолчанию, обязателен для отправки, текст со ссылкой на Политику обработки</td></tr>
+          <tr><td>Отдельность согласия</td><td>С 1 сентября 2025 согласие оформляется отдельно от пользовательского соглашения и договора — это отдельный чекбокс, а не строчка в оферте</td></tr>
+          <tr><td>Трансграничная передача</td><td>Отдельный чекбокс, если подключены зарубежные сервисы — Google Analytics и подобные</td></tr>
+          <tr><td>Локализация</td><td>Данные россиян хранятся с учётом требований локализации — влияет на выбор хостинга и базы</td></tr>
+          <tr><td>Политика на сайте</td><td>Опубликованный и актуальный документ по отдельному адресу, ссылка из подвала и из каждой формы</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caveat">Штрафы в разборах называют вплоть до 300 000 ₽ для организаций. Точную сумму под конкретный состав нарушения стоит сверять с актуальной редакцией КоАП — я привожу порядок величины, а не юридическую консультацию.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Скилы</span>
+      <h2>Что из установленного реально пойдёт в дело</h2>
+    </div>
+    <p class="measure">Мы поставили 20 скилов. В проекте автосервиса ядром работают четыре, около половины пригодятся точечно, а часть написана под другие агенты и здесь только зашумит выдачу. Вердикты ниже — по заявленным границам самих скилов, а не по маркетинговым описаниям.</p>
+
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>Скил</th><th>Вердикт</th><th>Где именно в проекте</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="skill">ui-ux-pro-max</td><td><span class="chip ok">Ядро</span></td><td>Уже выдал под этот домен готовую систему: паттерн Funnel в 3 шага, стиль Soft UI Evolution, палитру «календарный синий + свободный зелёный», Inter. Есть данные по react, nextjs, shadcn, html-tailwind — тем стекам, на которых мы и будем делать</td></tr>
+          <tr><td class="skill">ui-styling</td><td><span class="chip ok">Ядро</span></td><td>shadcn/ui и Tailwind: диалоги, формы, таблицы, состояния — ровно те кирпичи, из которых собирается запись</td></tr>
+          <tr><td class="skill">design-system</td><td><span class="chip ok">Ядро</span></td><td>Токены primitive → semantic → component. Чужого виджета нет, весь UI наш — значит, нужен обязательно, включая состояния слотов: свободен, занят, выбран, недоступен</td></tr>
+          <tr><td class="skill">high-end-visual-design</td><td><span class="chip ok">Ведёт визуал</span></td><td>По ответу <span class="mono">7.1</span> это главный скил проекта. Задаёт шрифты, воздух, глубину и анимации. На этом рынке доверие и есть конверсия — блок отзывов и гарантий должен выглядеть убедительно</td></tr>
+          <tr><td class="skill">design-taste-frontend</td><td><span class="chip part">Только лендинг</span></td><td>Сам скил пишет: лендинги, портфолио, редизайны — <em>не</em> дашборды, не таблицы, не многошаговый продуктовый UI. Раз мы выбрали расписание, граница проходит внутри проекта: главную и каталог ведёт он, экран выбора слота — нет</td></tr>
+          <tr><td class="skill">minimalist-ui</td><td><span class="chip off">Выбыл</span></td><td>Был кандидатом на визуальное направление, но по <span class="mono">7.1</span> выбран премиум. Держать включённым — значит спорить с ведущим скилом за триггер</td></tr>
+          <tr><td class="skill">industrial-brutalist-ui</td><td><span class="chip off">Выбыл</span></td><td>Второй кандидат на направление, тоже не выбран</td></tr>
+          <tr><td class="skill">brand</td><td><span class="chip part">Точечно</span></td><td>Нужен, только если у мастерской нет фирстиля и его надо собрать — tone of voice, гайдлайны</td></tr>
+          <tr><td class="skill">brandkit</td><td><span class="chip part">Точечно</span></td><td>Бренд-борды и логосистемы картинками. Полезен на этапе презентации заказчику, не на этапе вёрстки</td></tr>
+          <tr><td class="skill">design-suite</td><td><span class="chip part">Точечно</span></td><td>Логотип и иконки. Требует <code>GEMINI_API_KEY</code> — без ключа генерация не запустится</td></tr>
+          <tr><td class="skill">imagegen-frontend-web</td><td><span class="chip part">Точечно</span></td><td>Референс-картинки по одной на секцию до вёрстки. Хорошо экономит правки, если заказчик визуал</td></tr>
+          <tr><td class="skill">redesign-existing-projects</td><td><span class="chip part">Точечно</span></td><td>Включается, только если сайт уже есть и мы его переделываем, а не пишем с нуля — вопрос <span class="mono">1.4</span></td></tr>
+          <tr><td class="skill">full-output-enforcement</td><td><span class="chip part">Точечно</span></td><td>Страховка от обрезанного кода при генерации длинных файлов</td></tr>
+          <tr><td class="skill">banner-design</td><td><span class="chip part">Точечно</span></td><td>Для рекламных материалов. Учти: часть шагов ссылается на компаньон-скилы, которых у нас нет — работает только текстовая часть</td></tr>
+          <tr><td class="skill">slides</td><td><span class="chip part">Точечно</span></td><td>Если нужна презентация проекта заказчику мастерской</td></tr>
+          <tr><td class="skill">gpt-taste</td><td><span class="chip off">Не сейчас</span></td><td>Написан под GPT и Codex, требует собственной рандомизации на Python. Пересекается с design-taste-frontend и будет спорить с ним за триггер</td></tr>
+          <tr><td class="skill">image-to-code</td><td><span class="chip off">Не сейчас</span></td><td>Заточен под Codex и его порядок работы с изображениями</td></tr>
+          <tr><td class="skill">stitch-design-taste</td><td><span class="chip off">Не сейчас</span></td><td>Генерирует DESIGN.md для Google Stitch — другой инструмент</td></tr>
+          <tr><td class="skill">imagegen-frontend-mobile</td><td><span class="chip off">Не сейчас</span></td><td>Экраны мобильных приложений. Приложения в проекте нет — сайт мобильный, но это не одно и то же</td></tr>
+          <tr><td class="skill">design-taste-frontend-v1</td><td><span class="chip off">Не сейчас</span></td><td>Легаси-версия, оставлена для обратной совместимости</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="caveat">Практический вывод: семь скилов из двадцати стоит отключить на время проекта, чтобы они не перехватывали триггеры у ядра. Удалять не обязательно — достаточно сказать, и я вынесу их из <code>.claude/skills/</code> в отдельную папку.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">Опрос</span>
+      <h2>32 вопроса по требованиям</h2>
+    </div>
+    <p class="measure">Отвечай номерами — можно коротко и не на всё сразу. Помеченные <span class="mono" style="color:var(--accent)">▸</span> блокируют архитектуру: пока их нет, я не могу выбрать стек. Остальное можно уточнять по ходу.</p>
+
+    <div class="qblock">
+      <div class="qblock-head"><span class="qblock-n">01</span><h3>Бизнес и контекст</h3></div>
+      <div class="qlist">
+        <div class="q"><span class="q-n">1.1</span><span class="q-t">Как называется мастерская, в каком городе и районе работает?</span></div>
+        <div class="q"><span class="q-n">1.2</span><span class="q-t">Сколько постов и мастеров? <span class="hint">От этого зависит, имеет ли вообще смысл расписание вместо простой заявки.</span></span></div>
+        <div class="q"><span class="q-n">1.3</span><span class="q-t">Специализация: любые легковые, конкретные марки, коммерческий транспорт, кузовной ремонт, электрика, шиномонтаж?</span></div>
+        <div class="q"><span class="q-n">1.4</span><span class="q-t">Сайт уже есть? <span class="hint">Если да — дай адрес: включается <b>redesign-existing-projects</b> и меняется весь подход.</span></span></div>
+        <div class="q"><span class="q-n">1.5</span><span class="q-t">Есть ли логотип, фирменные цвета, фотографии цеха и работ?</span></div>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <div class="qblock-head"><span class="qblock-n">02</span><h3>Клиент и сценарий записи</h3></div>
+      <div class="qlist">
+        <div class="q"><span class="q-n">2.1</span><span class="q-t">Кто основной клиент: частник на своей машине, таксопарк, корпоративный автопарк?</span></div>
+        <div class="q"><span class="q-n">2.2</span><span class="q-t"><span style="color:var(--accent)">▸</span> Что именно происходит после нажатия кнопки: заявка уходит администратору или клиент занимает конкретное время?</span></div>
+        <div class="q"><span class="q-n">2.3</span><span class="q-t">Клиент выбирает мастера или пост, или ему всё равно кто чинит?</span></div>
+        <div class="q"><span class="q-n">2.4</span><span class="q-t">Длительность работ известна заранее по видам услуг? <span class="hint">Без этого расписание не построить: слот нельзя закрыть, не зная, сколько машина займёт пост.</span></span></div>
+        <div class="q"><span class="q-n">2.5</span><span class="q-t">Нужна ли предоплата или бронь по карте?</span></div>
+        <div class="q"><span class="q-n">2.6</span><span class="q-t">Клиент может сам отменить или перенести запись, или только звонком?</span></div>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <div class="qblock-head"><span class="qblock-n">03</span><h3>Услуги, цены, подбор</h3></div>
+      <div class="qlist">
+        <div class="q"><span class="q-n">3.1</span><span class="q-t">Есть готовый прайс-лист? В каком виде — таблица, 1С, на бумаге?</span></div>
+        <div class="q"><span class="q-n">3.2</span><span class="q-t">Показываем цены на сайте или только «от»? <span class="hint">У Белого сервиса прозрачный прайс и калькулятор — это их главный аргумент.</span></span></div>
+        <div class="q"><span class="q-n">3.3</span><span class="q-t">Нужен калькулятор стоимости или квиз-подбор услуги?</span></div>
+        <div class="q"><span class="q-n">3.4</span><span class="q-t">Подбор по марке и модели или по VIN и госномеру? <span class="hint">Автозаполнение по VIN — стандарт у CRM второго эшелона, но требует внешнего справочника.</span></span></div>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <div class="qblock-head"><span class="qblock-n">04</span><h3>Интеграции и процесс</h3></div>
+      <div class="qlist">
+        <div class="q"><span class="q-n">4.1</span><span class="q-t"><span style="color:var(--accent)">▸</span> Какая учётная система стоит сейчас: YCLIENTS, АвтоДилер, 1С:Автосервис, Wilgood, Excel, ничего? <span class="hint">Главный вопрос всего проекта. Если CRM есть — берём её виджет и не пишем свою запись.</span></span></div>
+        <div class="q"><span class="q-n">4.2</span><span class="q-t">Куда должна падать заявка: Telegram, WhatsApp, почта, CRM, всё сразу?</span></div>
+        <div class="q"><span class="q-n">4.3</span><span class="q-t">Нужны ли SMS-подтверждение и напоминание за сутки? <span class="hint">Напоминание срезает неявки примерно вдвое — я бы закладывал сразу. Нужен платный провайдер SMS.</span></span></div>
+        <div class="q"><span class="q-n">4.4</span><span class="q-t">Кто и в какое время обрабатывает заявки? Есть выходные и ночь, когда никто не отвечает?</span></div>
+        <div class="q"><span class="q-n">4.5</span><span class="q-t">Нужен ли клиенту статус ремонта на сайте? <span class="hint">Белый сервис делает это своим преимуществом, но это отдельный кусок работы с авторизацией.</span></span></div>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <div class="qblock-head"><span class="qblock-n">05</span><h3>Техника и запуск</h3></div>
+      <div class="qlist">
+        <div class="q"><span class="q-n">5.1</span><span class="q-t"><span style="color:var(--accent)">▸</span> Есть предпочтения по стеку или отдаёшь на моё усмотрение?</span></div>
+        <div class="q"><span class="q-n">5.2</span><span class="q-t">Где хостим? <span class="hint">Из-за требований локализации ПДн зарубежный хостинг для формы записи — риск.</span></span></div>
+        <div class="q"><span class="q-n">5.3</span><span class="q-t">Домен уже куплен?</span></div>
+        <div class="q"><span class="q-n">5.4</span><span class="q-t">Аналитика: Яндекс.Метрика, цели на отправку формы, коллтрекинг?</span></div>
+        <div class="q"><span class="q-n">5.5</span><span class="q-t">Кто будет вести сайт после сдачи — нужна ли админка для текстов и цен?</span></div>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <div class="qblock-head"><span class="qblock-n">06</span><h3>Юридическое</h3></div>
+      <div class="qlist">
+        <div class="q"><span class="q-n">6.1</span><span class="q-t">ИП или ООО, реквизиты для подвала и договора оферты?</span></div>
+        <div class="q"><span class="q-n">6.2</span><span class="q-t">Политика обработки персональных данных существует или пишем с нуля?</span></div>
+        <div class="q"><span class="q-n">6.3</span><span class="q-t">Уведомление в Роскомнадзор об обработке ПДн подано?</span></div>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <div class="qblock-head"><span class="qblock-n">07</span><h3>Объём, вид, сроки</h3></div>
+      <div class="qlist">
+        <div class="q"><span class="q-n">7.1</span><span class="q-t"><span style="color:var(--accent)">▸</span> Визуальное направление: спокойный минимализм, дорогой премиум или техническая индустриальная эстетика? <span class="hint">Определяет, какой скил ведёт визуал: <b>minimalist-ui</b>, <b>high-end-visual-design</b> или <b>industrial-brutalist-ui</b>.</span></span></div>
+        <div class="q"><span class="q-n">7.2</span><span class="q-t">Сколько страниц: одностраничник, лендинг плюс каталог услуг или полноценный сайт с SEO-страницами под запросы?</span></div>
+        <div class="q"><span class="q-n">7.3</span><span class="q-t">Одна точка или сеть филиалов с выбором адреса?</span></div>
+        <div class="q"><span class="q-n">7.4</span><span class="q-t">Срок и бюджет — к какой дате нужно работающее?</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="sec-tag">План</span>
+      <h2>Что делаем по итогам опроса</h2>
+    </div>
+    <div class="rec">
+      <ol>
+        <li><b>Next.js 16 на App Router, Tailwind и shadcn/ui.</b> Стек отдан на моё усмотрение в <span class="mono">5.1</span>. По этой связке у <code>ui-ux-pro-max</code> есть данные сразу по трём стекам, а <code>ui-styling</code> оперирует ровно этими компонентами.</li>
+        <li><b>База — SQLite через Prisma.</b> Раз хостинга и домена пока нет <span class="mono">(5.2, 5.3)</span>, проект живёт локально. Схема пишется переносимой, чтобы переезд на Postgres был сменой строки подключения, а не переделкой.</li>
+        <li><b>Модель предельно простая:</b> два поста, услуги с длительностью, брони. Мастера в модели нет — клиент его не выбирает. Двойную запись ловит уникальный индекс на паре «пост и время», а не проверка в форме.</li>
+        <li><b>Два режима слота.</b> До трёх часов клиент выбирает время. Дольше — выбирает только дату, машина остаётся. Иначе одна замена сцепления съедает больше половины дня одного из двух постов.</li>
+        <li><b>Запись в два шага:</b> марка, VIN и вид работ, затем время и телефон. VIN — обычное поле с проверкой формата, без авторасшифровки <span class="mono">(3.4)</span>: платного внешнего сервиса не заводим.</li>
+        <li><b>Telegram-уведомление мастеру</b> сразу после брони, состав задан в <span class="mono">2.2</span>: время, марка, вид работ. Добавляю телефон и VIN — без них не перезвонить и не подготовиться. Обычный Bot API, никаких посредников.</li>
+        <li><b>Контент без админки</b> <span class="mono">(5.5)</span>: услуги и цены живут файлами в репозитории, правки идут через меня. Цены показываем как «от» <span class="mono">(3.2)</span>, на них же строится калькулятор <span class="mono">(3.3)</span>.</li>
+        <li><b>Платёжного контура не будет вовсе</b> — предоплата не нужна <span class="mono">(2.5)</span>, отмена звонком <span class="mono">(2.6)</span>. Это снимает с проекта целый класс работы и рисков.</li>
+        <li><b>Фирстиля нет</b> <span class="mono">(1.5)</span>, поэтому визуальную систему для NiKillya собираем с нуля: <code>brand</code> задаёт направление, <code>ui-ux-pro-max</code> даёт палитру и шрифтовые пары, <code>high-end-visual-design</code> ведёт исполнение.</li>
+        <li><b>Вторым этапом:</b> статус ремонта для клиента <span class="mono">(4.5)</span> — нужна ссылка-токен, и SMS-напоминания <span class="mono">(4.3)</span> — нужен платный провайдер. Сейчас закладываю под них место в модели, но не строю.</li>
+      </ol>
+    </div>
+
+    <p class="caveat">Отдельно, без советов и оценок: по блоку <span class="mono">6</span> владелец не ИП и не самозанятый, а сайт будет собирать телефоны, VIN и марки машин. Чекбокс согласия и Политику обработки я поставлю по умолчанию — они дёшевы и лишними не бывают. Но правовой и налоговый статус этой деятельности — вопрос к юристу, а не ко мне, и решать его нужно до того, как сайт станет публичным.</p>
+  </section>
+
+  <section class="sources">
+    <div class="sec-head">
+      <span class="sec-tag">Источники</span>
+      <h2 style="font-size:1.15rem">На чём основан разбор</h2>
+    </div>
+    <ul>
+      <li><a href="https://unicornplatform.com/blog/auto-repair-website-growth-playbook-for-2026/">Auto Repair Website Growth in 2026: A Practical Playbook for More Qualified Bookings</a> — структура из семи блоков, поля формы, окно подтверждения</li>
+      <li><a href="https://www.whyoptimize.com/blog/online-scheduling-for-auto-repair-shops">Online Scheduling for Auto Repair Shops: Best Practices</a> — напоминания и неявки</li>
+      <li><a href="https://www.shopmonkey.io/blog/best-auto-repair-scheduling-software">Best Auto Repair Scheduling Software in 2026 — Shopmonkey</a></li>
+      <li><a href="https://www.webcitz.com/blog/best-auto-repair-websites/">15 Best Auto Repair Website Designs for 2026 (Expert Audit)</a></li>
+      <li><a href="https://autodealer.ru/online/planing">АвтоДилер Онлайн — виджет записи, статусы, автозаполнение по VIN</a></li>
+      <li><a href="https://www.yclients.com/online-booking">YCLIENTS — онлайн-запись и виджеты бронирования</a></li>
+      <li><a href="https://picktech.ru/product/wilgood-is/">Wilgood IS — обзор, цены, функционал</a></li>
+      <li><a href="https://gravitel.ru/blog/keysy/keys-uremont-kak-vybrat-avtoservis/">Кейс Uremont — как устроен агрегатор автосервисов</a></li>
+      <li><a href="https://wilgood.ru/">Вилгуд</a>, <a href="https://www.beliyservice.ru/">Белый сервис</a>, <a href="https://surgut.beliyservice.ru/prices/">калькулятор цен Белого сервиса</a></li>
+      <li><a href="https://vc.ru/fzscan/2918824-152-fz-chto-dolzhno-byt-na-sayte">152-ФЗ: что должно быть на сайте в 2026 году</a>, <a href="https://pdaudit.ru/blog/soglasie-na-pdn-obrazets/">образец согласия на обработку ПДн</a>, <a href="https://tilda.education/articles-personal-data-law">разбор требований к формам</a></li>
+    </ul>
+  </section>
+
+</div>
