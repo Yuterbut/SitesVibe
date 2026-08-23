@@ -1,0 +1,30 @@
+id,name,category,labor_hours,slot_hours,mode,confidence
+oil-engine,Замена масла ДВС с фильтром,express,0.5,1.0,timed,found
+filter-air,Замена воздушного фильтра,express,0.2,0.5,timed,estimate
+filter-cabin,Замена салонного фильтра,express,0.3,0.5,timed,estimate
+wipers,Замена щёток стеклоочистителя,express,0.1,0.5,timed,estimate
+battery,Замена аккумулятора,express,0.3,0.5,timed,estimate
+diag-obd,Компьютерная диагностика,express,0.5,1.0,timed,estimate
+spark-plugs,Замена свечей зажигания,to,0.8,1.5,timed,estimate
+brake-pads,Замена тормозных колодок (одна ось),brakes,0.9,1.5,timed,estimate
+brake-discs,Замена тормозных дисков с колодками (одна ось),brakes,1.5,2.0,timed,estimate
+brake-fluid,Замена тормозной жидкости,brakes,0.7,1.0,timed,estimate
+coolant,Замена антифриза,to,0.7,1.0,timed,estimate
+tyre-set,Шиномонтаж комплекта с балансировкой,tyres,1.0,1.5,timed,found
+alignment,Развал-схождение,tyres,0.7,1.5,timed,found
+diag-suspension,Диагностика подвески на подъёмнике,suspension,0.5,1.0,timed,estimate
+stab-links,Замена стоек стабилизатора (пара),suspension,0.7,1.0,timed,estimate
+ac-refill,Заправка кондиционера,climate,0.7,1.0,timed,estimate
+to-complex,"Комплексное ТО (масло, фильтры, осмотр)",to,1.7,2.5,timed,estimate
+shocks-rear,Замена амортизаторов задних (пара),suspension,1.5,2.0,timed,estimate
+shocks-front,Замена стоек передних (пара),suspension,2.2,3.0,timed,estimate
+control-arms,Замена рычагов подвески (пара),suspension,2.0,2.5,timed,estimate
+wheel-bearing,Замена ступичного подшипника (одна сторона),suspension,2.0,2.5,timed,estimate
+alternator,Замена генератора,engine,2.0,2.5,timed,estimate
+starter,Замена стартера,engine,2.0,2.5,timed,estimate
+thermostat,Замена термостата,engine,1.5,2.0,timed,estimate
+water-pump,Замена помпы,engine,2.5,3.0,timed,estimate
+radiator,Замена радиатора,engine,2.5,3.0,timed,estimate
+timing-belt,Замена ремня ГРМ (комплект),engine,3.5,4.0,timed,found
+timing-belt-pump,Замена ремня ГРМ с помпой,engine,4.0,5.0,day,found
+clutch,Замена сцепления,transmission,5.0,6.0,day,estimate
