@@ -159,6 +159,12 @@ export default function BookingForm({ services, days, telegramHandle }: Props) {
           Он перезвонит, чтобы подтвердить. Ваш код записи — назовите его по телефону:
         </p>
         <p className="mt-4 font-mono text-3xl tracking-[0.15em] text-brass">{code}</p>
+        <a
+          href={`/z/${code}`}
+          className="mt-5 inline-block rounded-xl border border-line px-5 py-3 font-semibold transition-colors hover:border-brass"
+        >
+          Смотреть статус записи
+        </a>
         <p className="mt-6 text-sm text-muted">
           Нужно отменить или перенести? Позвоните — так быстрее всего.
         </p>

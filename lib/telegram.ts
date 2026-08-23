@@ -19,6 +19,8 @@ export type BookingMessage = {
   vehicle: string;
   vin?: string;
   note?: string;
+  /** Подписанная ссылка, по которой мастер меняет статус. */
+  masterUrl?: string;
 };
 
 export type SendResult =
@@ -64,6 +66,8 @@ export function formatBookingMessage(
   if (m.vin) lines.push(`VIN: <code>${escapeHtml(m.vin)}</code>`);
   lines.push("", `${escapeHtml(m.name)} · <code>${escapeHtml(m.phone)}</code>`);
   if (m.note) lines.push("", `«${escapeHtml(m.note)}»`);
+  // Ссылка на управление статусом — вместо админки, которой в проекте нет.
+  if (m.masterUrl) lines.push("", `<a href="${escapeHtml(m.masterUrl)}">Управлять записью</a>`);
 
   return lines.join("\n");
 }

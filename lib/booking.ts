@@ -9,6 +9,7 @@ import {
   wholeDay,
 } from "./schedule";
 import { sendBooking } from "./telegram";
+import { makeToken } from "./tokens";
 import type { BookingInput } from "./validation";
 
 export { bookingInput, normalizePhone, type BookingInput } from "./validation";
@@ -21,6 +22,11 @@ export type BookingResult =
       reason: "taken" | "unknown-service" | "closed" | "past" | "telegram";
       message: string;
     };
+
+/** Адрес сайта для ссылок в сообщении мастеру. */
+function siteUrl(): string {
+  return (process.env.SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+}
 
 /** Уникальный индекс SlotHold нарушен — значит, слот заняли параллельно. */
 function isSlotConflict(error: unknown): boolean {
@@ -131,6 +137,7 @@ export async function createBooking(input: BookingInput): Promise<BookingResult>
       vehicle: input.vehicle,
       vin: input.vin || undefined,
       note: input.note || undefined,
+      masterUrl: `${siteUrl()}/m/${makeToken(booking.id)}`,
     },
     SHOP_TZ_OFFSET_MINUTES,
   );
