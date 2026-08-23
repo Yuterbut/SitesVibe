@@ -5,6 +5,7 @@ import {
   SHOP_TZ_OFFSET_MINUTES,
   WORK_DAY_HOURS,
   candidateStarts,
+  dayLabels,
   endOf,
   freeStarts,
   generateCode,
@@ -15,6 +16,7 @@ import {
   shopTime,
   slotCount,
   toShopMinutes,
+  upcomingWorkingDays,
   wholeDay,
 } from "./schedule";
 
@@ -199,5 +201,23 @@ describe("код брони", () => {
 
   it("детерминирован при заданном источнике случайности", () => {
     assert.equal(generateCode(() => 0), "AAAAAA");
+  });
+});
+
+describe("ближайшие дни", () => {
+  it("пропускает выходные", () => {
+    // Стартуем в субботу 2026-08-29.
+    const days = upcomingWorkingDays(3, shopTime("2026-08-29", 10 * 60));
+    assert.deepEqual(days, ["2026-08-29", "2026-08-31", "2026-09-01"]);
+  });
+
+  it("отдаёт ровно столько дней, сколько попросили", () => {
+    assert.equal(upcomingWorkingDays(7, shopTime(MON, 10 * 60)).length, 7);
+  });
+
+  it("подписывает дни по-русски", () => {
+    const { label, weekday } = dayLabels(MON);
+    assert.match(label, /24/);
+    assert.equal(weekday, "понедельник");
   });
 });

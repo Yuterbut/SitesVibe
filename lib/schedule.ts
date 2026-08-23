@@ -186,3 +186,37 @@ export function generateCode(random: () => number = Math.random): string {
   }
   return code;
 }
+
+/**
+ * Ближайшие рабочие дни, начиная с сегодняшнего. Выходные пропускаются,
+ * чтобы клиент не тыкал в день, когда мастерская закрыта.
+ */
+export function upcomingWorkingDays(count: number, from: Date = new Date()): DayISO[] {
+  const out: DayISO[] = [];
+  const cursor = new Date(from.getTime());
+
+  // Ограничение на случай, если рабочих дней в неделе не окажется вовсе.
+  for (let guard = 0; out.length < count && guard < count * 7 + 14; guard++) {
+    const day = shopDayISO(cursor);
+    if (isWorkingDay(day)) out.push(day);
+    cursor.setUTCDate(cursor.getUTCDate() + 1);
+  }
+  return out;
+}
+
+/** Подписи дня для кнопок выбора: «24 авг» и «понедельник». */
+export function dayLabels(day: DayISO): { label: string; weekday: string } {
+  const at = shopTime(day, 12 * 60);
+  const shifted = new Date(at.getTime() + SHOP_TZ_OFFSET_MINUTES * 60_000);
+  return {
+    label: new Intl.DateTimeFormat("ru-RU", {
+      day: "numeric",
+      month: "short",
+      timeZone: "UTC",
+    }).format(shifted),
+    weekday: new Intl.DateTimeFormat("ru-RU", {
+      weekday: "long",
+      timeZone: "UTC",
+    }).format(shifted),
+  };
+}

@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+  Дизайн-система NiKillya.
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  Направление — «дорогой премиум» (ответ 7.1). Палитра взята из базы
+  ui-ux-pro-max: тёплый графит плюс латунный акцент. Стиль Liquid Glass,
+  который база предложила вместе с ней, отклонён — он про навигацию
+  в Apple-платформах, а не про мастерскую.
+
+  Шрифты подобраны под кириллицу: Plus Jakarta Sans и Geist из рекомендаций
+  скила high-end-visual-design её не поддерживают, поэтому взяты Unbounded
+  для заголовков, Manrope для текста и JetBrains Mono для данных — времени
+  слотов, кодов броней и VIN.
+*/
+
+:root {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --surface-2: #f2eee8;
+  --ink: #1a1614;
+  --ink-2: #4a423c;
+  --muted: #877c73;
+  --line: #e4ddd3;
+  --line-strong: #cfc5b8;
+
+  --brass: #8f5606;
+  --brass-hi: #a16207;
+  --on-brass: #ffffff;
+
+  --ok: #2f6b4f;
+  --ok-bg: #e6f0e9;
+  --danger: #a3231c;
+  --danger-bg: #fbeae8;
+
+  /* Тёмный блок внутри светлой страницы — герой и подвал. */
+  --night: #14110f;
+  --night-ink: #f5f0ea;
+  --night-muted: #a1968a;
+  --night-line: #2c2521;
+
+  --shadow-sm: 0 1px 2px rgb(26 22 20 / 0.04), 0 2px 8px -4px rgb(26 22 20 / 0.08);
+  --shadow-md: 0 2px 4px rgb(26 22 20 / 0.04), 0 12px 32px -12px rgb(26 22 20 / 0.16);
+  --shadow-lg: 0 4px 8px rgb(26 22 20 / 0.05), 0 32px 64px -24px rgb(26 22 20 / 0.24);
+
+  /* Свои кривые: линейные и ease-in-out выглядят дёшево. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg: #12100e;
+    --surface: #1a1614;
+    --surface-2: #221d1a;
+    --ink: #f5f0ea;
+    --ink-2: #cec4b8;
+    --muted: #94897d;
+    --line: #2c2521;
+    --line-strong: #3d342e;
+
+    --brass: #d9a441;
+    --brass-hi: #e8bc63;
+    --on-brass: #14110f;
+
+    --ok: #7cc79f;
+    --ok-bg: #1a2b22;
+    --danger: #e88a83;
+    --danger-bg: #2e1b19;
+
+    --night: #0d0b0a;
+    --night-ink: #f5f0ea;
+    --night-muted: #9d9286;
+    --night-line: #262019;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 2px 4px rgb(0 0 0 / 0.4), 0 12px 32px -12px rgb(0 0 0 / 0.6);
+    --shadow-lg: 0 4px 8px rgb(0 0 0 / 0.5), 0 32px 64px -24px rgb(0 0 0 / 0.7);
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brass: var(--brass);
+  --color-brass-hi: var(--brass-hi);
+  --color-on-brass: var(--on-brass);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-night: var(--night);
+  --color-night-ink: var(--night-ink);
+  --color-night-muted: var(--night-muted);
+  --color-night-line: var(--night-line);
+
+  --font-display: var(--font-unbounded), system-ui, sans-serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --shadow-soft: var(--shadow-sm);
+  --shadow-card: var(--shadow-md);
+  --shadow-float: var(--shadow-lg);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Плёночное зерно: без него большие тёмные плоскости выглядят пластиковыми. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-unbounded), system-ui, sans-serif;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass-hi);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Появление секций при скролле. Уважает системную настройку. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.5s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
