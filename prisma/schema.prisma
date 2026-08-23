@@ -1,0 +1,96 @@
+// Схема NiKillya.
+//
+// Главное правило: здесь НЕТ персональных данных. Ни имени, ни телефона,
+// ни VIN, ни почты. База знает только про занятость постов и про то,
+// какая работа когда делается. Контакты клиента уходят мастеру в Telegram
+// и в базу не попадают — см. docs/discovery.html, раздел «Данные».
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// Пост (подъёмник). Их два, и это вся мощность мастерской.
+model Bay {
+  id       Int       @id
+  name     String
+  active   Boolean   @default(true)
+  bookings Booking[]
+}
+
+/// Вид работ. Длительности — из data/services.csv.
+model Service {
+  id       String @id
+  name     String
+  category String
+
+  /// Оценка трудозатрат мастера. Показываем клиенту, для планирования не используем.
+  laborHours Float
+
+  /// Сколько пост занят целиком: приёмка, работа, оформление, выдача.
+  /// Планировщик считает только по этому полю.
+  slotHours Float
+
+  /// "timed" — клиент выбирает время. "day" — машина остаётся, выбирается только дата.
+  mode String
+
+  /// Насколько число надёжно: "found" — есть источник, "estimate" — типовая оценка.
+  confidence String @default("estimate")
+
+  /// Цена «от», в рублях. Пусто, пока мастерская не проставит свои.
+  priceFrom Int?
+
+  active    Boolean   @default(true)
+  sortOrder Int       @default(0)
+  bookings  Booking[]
+
+  @@index([category, sortOrder])
+}
+
+/// Бронь. Обезличена: кто именно приедет, знает только Telegram мастера.
+model Booking {
+  id String @id @default(cuid())
+
+  /// Короткий публичный код. По нему клиент смотрит статус — вместо авторизации.
+  code String @unique
+
+  bayId     Int
+  bay       Bay     @relation(fields: [bayId], references: [id])
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  startAt DateTime
+  endAt   DateTime
+
+  /// pending — слот занят, но уведомление ещё не ушло.
+  /// new — мастер уведомлён. Дальше: confirmed, in_progress, done, cancelled.
+  status String @default("pending")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  holds SlotHold[]
+
+  @@index([startAt])
+  @@index([status])
+}
+
+/// Материализованная занятость: одна строка на каждые 30 минут, которые
+/// бронь занимает на посту. Уникальный индекс на паре «пост и начало слота»
+/// делает двойную запись невозможной на уровне базы, а не на уровне формы —
+/// включая гонку двух одновременных запросов.
+model SlotHold {
+  id        Int      @id @default(autoincrement())
+  bayId     Int
+  slotStart DateTime
+
+  bookingId String
+  booking   Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@unique([bayId, slotStart])
+  @@index([slotStart])
+}
