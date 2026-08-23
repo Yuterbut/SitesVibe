@@ -10,7 +10,7 @@ import StatusButtons from "./StatusButtons";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Запись — управление",
+  title: "Управление записью",
   // Служебная страница мастера: в поиске ей делать нечего.
   robots: { index: false, follow: false },
 };

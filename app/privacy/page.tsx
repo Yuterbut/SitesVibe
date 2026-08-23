@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Что происходит с вашими данными — NiKillya",
+  title: "Что происходит с вашими данными",
   description:
     "Короткое и честное объяснение: сайт не хранит имя, телефон и VIN. Заявка уходит мастеру в Telegram.",
 };

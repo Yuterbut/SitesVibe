@@ -9,6 +9,7 @@ import {
   wholeDay,
 } from "./schedule";
 import { sendBooking } from "./telegram";
+import { siteUrl } from "./site";
 import { makeToken } from "./tokens";
 import type { BookingInput } from "./validation";
 
@@ -22,11 +23,6 @@ export type BookingResult =
       reason: "taken" | "unknown-service" | "closed" | "past" | "telegram";
       message: string;
     };
-
-/** Адрес сайта для ссылок в сообщении мастеру. */
-function siteUrl(): string {
-  return (process.env.SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
-}
 
 /** Уникальный индекс SlotHold нарушен — значит, слот заняли параллельно. */
 function isSlotConflict(error: unknown): boolean {

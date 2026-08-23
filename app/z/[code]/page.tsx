@@ -10,7 +10,7 @@ import { STATUS_VIEW, isStatus } from "@/lib/status";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Статус записи — NiKillya",
+  title: "Статус записи",
   robots: { index: false },
 };
 
